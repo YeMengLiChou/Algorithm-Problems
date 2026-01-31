@@ -62,7 +62,6 @@ const INF = 0x3f3f3f3f
 type Graph struct {
 	n, idx      int
 	f, v, w, ne []int
-	vis         []bool
 }
 
 func NewGraph(n, m int) *Graph {
@@ -71,12 +70,11 @@ func NewGraph(n, m int) *Graph {
 		f[i] = -1
 	}
 	return &Graph{
-		n:   n + 1,
-		f:   f,
-		v:   make([]int, m),
-		w:   make([]int, m),
-		ne:  make([]int, m),
-		vis: make([]bool, n),
+		n:  n + 1,
+		f:  f,
+		v:  make([]int, m),
+		w:  make([]int, m),
+		ne: make([]int, m),
 	}
 }
 

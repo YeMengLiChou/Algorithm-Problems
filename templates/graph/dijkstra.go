@@ -16,13 +16,9 @@ func dijkstra(g *Graph, start int, end int) int {
 		if dist[u] < d { // 已经找到更短的路径，跳过
 			continue
 		}
-		if u == end { // 到达终点，直接返回
-			return d
-		}
-		if g.vis[u] { // 已经查找过，跳过
+		if end == u { // 找到终点
 			continue
 		}
-		g.vis[u] = true
 		// 从节点u出发，尝试找到一条比现有更短的路径
 		for i := g.f[u]; i != -1; i = g.ne[i] {
 			v := g.v[i]
