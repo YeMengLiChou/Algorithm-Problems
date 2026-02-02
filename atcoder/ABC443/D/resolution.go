@@ -9,10 +9,30 @@ import (
 )
 
 func solution() {
+	N := int(readI())
+	R := make([]int32, N)
+	for i := range N {
+		R[i] = int32(readI())
+	}
+	lefts, rights := make([]int32, N), make([]int32, N)
+	lefts[0] = R[0]
+
+	for i := range N - 1 {
+		lefts[i+1] = min(lefts[i]+1, R[i+1])
+	}
+	rights[N-1] = lefts[N-1]
+	for i := N - 2; i >= 0; i-- {
+		rights[i] = min(lefts[i], rights[i+1]+1)
+	}
+	var res int64 = 0
+	for i := range N {
+		res += int64(R[i] - rights[i])
+	}
+	puts(res, "\n")
 }
 
 var (
-	file = os.Getenv("input")
+	file = os.Getenv("LI_INPUT")
 	in   = bufio.NewReader(os.Stdin)
 	out  = bufio.NewWriter(os.Stdout)
 )
@@ -27,22 +47,18 @@ func main() {
 		}
 	}
 	defer out.Flush()
-	T := 1
-	// T = readI()
-	for range T {
+	T := readI()
+	for T > 0 {
 		solution()
+		T--
 	}
 }
 
-type Int = int64
-
-func readI() Int { // 快读
-	var (
-		x   Int
-		neg bool
-		c   byte
-		err error
-	)
+func readI() int64 { // 快读int64
+	var x int64
+	var neg bool = false
+	var c byte
+	var err error
 	for c, err = in.ReadByte(); c < '0' || c > '9'; c, err = in.ReadByte() {
 		if c == '-' {
 			neg = true
@@ -52,7 +68,7 @@ func readI() Int { // 快读
 		}
 	}
 	for c >= '0' && c <= '9' {
-		x = x*10 + Int(c-'0')
+		x = x*10 + int64(c-'0')
 		c, _ = in.ReadByte()
 	}
 	if neg {

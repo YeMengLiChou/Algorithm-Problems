@@ -9,6 +9,15 @@ import (
 )
 
 func solution() {
+	n, k := readI(), readI()
+	var total int64 = n
+	var result int64 = 0
+
+	for total < k {
+		result++
+		total += result + n
+	}
+	puts(result)
 }
 
 var (
@@ -27,22 +36,14 @@ func main() {
 		}
 	}
 	defer out.Flush()
-	T := 1
-	// T = readI()
-	for range T {
-		solution()
-	}
+	solution()
 }
 
-type Int = int64
-
-func readI() Int { // 快读
-	var (
-		x   Int
-		neg bool
-		c   byte
-		err error
-	)
+func readI() int64 { // 快读int64
+	var x int64
+	var neg bool = false
+	var c byte
+	var err error
 	for c, err = in.ReadByte(); c < '0' || c > '9'; c, err = in.ReadByte() {
 		if c == '-' {
 			neg = true
@@ -52,7 +53,7 @@ func readI() Int { // 快读
 		}
 	}
 	for c >= '0' && c <= '9' {
-		x = x*10 + Int(c-'0')
+		x = x*10 + int64(c-'0')
 		c, _ = in.ReadByte()
 	}
 	if neg {
@@ -100,4 +101,3 @@ func readS() string { // 快读字符串
 	}
 	return strBuffer.String()
 }
-
