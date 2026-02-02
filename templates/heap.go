@@ -8,3 +8,11 @@ func (hq *hq) Less(i int, j int) bool { return (*hq)[i] < (*hq)[j] }
 func (hq *hq) Swap(i int, j int)      { (*hq)[i], (*hq)[j] = (*hq)[j], (*hq)[i] }
 func (hq *hq) Push(x any)             { (*hq) = append((*hq), x.(int)) }
 func (hq *hq) Pop() any               { n := len(*hq); item := (*hq)[n-1]; (*hq) = (*hq)[:n-1]; return item }
+func (hq *hq) Peek() *int {
+	n := len(*hq)
+	if n == 0 {
+		return nil
+	} else {
+		return &(*hq)[n-1]
+	}
+}

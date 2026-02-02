@@ -1,9 +1,8 @@
 package main
 
 func findRepeatedDnaSequences(s string) []string {
-	const B = 13131313
 	n := len(s)
-	sh := NewStringHasher(&s, B)
+	sh := NewStringHasher(&s, 13131313)
 	mp := make(map[uint64]int)
 	res := make([]string, 0)
 	for i := 0; i+10 <= n; i++ {
@@ -31,8 +30,8 @@ func NewStringHasher(s *string, base uint64) *StringHasher {
 	h := make([]uint64, n+1)
 	p[0] = 1
 	for i, c := range *s {
-		p[i+1] = p[i]*base + uint64(c-'a')
-		h[i+1] = h[i] * base
+		h[i+1] = h[i]*base + uint64(c-'a')
+		p[i+1] = p[i] * base
 	}
 	return &StringHasher{h, p, s}
 }
