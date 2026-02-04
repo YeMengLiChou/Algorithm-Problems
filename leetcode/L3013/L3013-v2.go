@@ -47,7 +47,7 @@ func minimumCost(nums []int, k int, dist int) int64 {
 		l++
 		r++
 	}
-	return res
+	return res + int64(nums[0])
 }
 
 type LazyHeap struct {
