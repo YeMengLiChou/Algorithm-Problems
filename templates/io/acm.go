@@ -8,6 +8,8 @@ import (
 	"os"
 )
 
+type Int = int64
+
 func solution() {
 }
 
@@ -33,8 +35,6 @@ func main() {
 		solution()
 	}
 }
-
-type Int = int64
 
 func readI() Int { // 快读
 	var (
@@ -100,4 +100,3 @@ func readS() string { // 快读字符串
 	}
 	return strBuffer.String()
 }
-
