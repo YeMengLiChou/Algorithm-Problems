@@ -53,7 +53,11 @@ func (st *SegTree) build(u, l, r int, nums []int) {
 	st.pushup(u, lc, rc)
 }
 
-func (st *SegTree) Update(u, l, r, ql, qr, k int) {
+func (st *SegTree) Update(ql, qr, k int) {
+	st.update(1, 0, st.N-1, ql, qr, k)
+}
+
+func (st *SegTree) update(u, l, r, ql, qr, k int) {
 	if r < ql || l > qr {
 		return
 	} else if ql <= l && r <= qr {
@@ -64,12 +68,16 @@ func (st *SegTree) Update(u, l, r, ql, qr, k int) {
 	}
 	mid, lc, rc := position(u, l, r)
 	st.pushdown(u, lc, rc, l, r)
-	st.Update(lc, l, mid, ql, qr, k)
-	st.Update(rc, mid+1, r, ql, qr, k)
+	st.update(lc, l, mid, ql, qr, k)
+	st.update(rc, mid+1, r, ql, qr, k)
 	st.pushup(u, lc, rc)
 }
 
-func (st *SegTree) Query(u, l, r, ql, qr int) int {
+func (st *SegTree) Query(ql, qr int) int {
+	return st.query(1, 0, st.N-1, ql, qr)
+}
+
+func (st *SegTree) query(u, l, r, ql, qr int) int {
 	if r < ql || l > qr {
 		return 0
 	} else if ql <= l && r <= qr {
@@ -77,5 +85,5 @@ func (st *SegTree) Query(u, l, r, ql, qr int) int {
 	}
 	mid, lc, rc := position(u, l, r)
 	st.pushdown(u, lc, rc, l, r)
-	return st.Query(lc, l, mid, ql, qr) + st.Query(rc, mid+1, r, ql, qr)
+	return st.query(lc, l, mid, ql, qr) + st.query(rc, mid+1, r, ql, qr)
 }

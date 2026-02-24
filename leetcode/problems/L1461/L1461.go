@@ -17,18 +17,13 @@ func hasAllCodes(s string, k int) bool {
 	if k > n {
 		return false
 	}
-	mask, a := 0, 0
-	for idx := range k {
-		mask |= 1 << idx
-		a <<= 1
-		a |= int(s[idx] - '0')
-	}
-	vis[a] = true
-	mx := int(math.Pow(2, float64(k)))
-	for i := k; i < n; i++ {
-		a <<= 1
-		a |= int(s[i] - '0')
-		a &= mask
+	mask := (1 << k) - 1
+	mx, a := int(math.Pow(2, float64(k))), 0
+	for i := range n {
+		a = ((a << 1) | int(s[i]-'0')) & mask
+		if i < k-1 {
+			continue
+		}
 		vis[a] = true
 		if len(vis) == mx {
 			return true
@@ -36,4 +31,3 @@ func hasAllCodes(s string, k int) bool {
 	}
 	return false
 }
-
