@@ -6,12 +6,87 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"sort"
 )
 
 type Int = int
 
 func solution() {
 	N, Q := readI(), readI()
+	// 原始编号
+	rawDirs := make([]Dir, N)
+	// 统计同一个方向上的点数
+	cnts := make([]int, 0, N)
+	dirs := make([]Dir, 0, N)
+	// dir -> id
+	dirIDs := make(map[Dir]int, N)
+	for i := range N {
+		x, y := readI(), readI()
+		o := GCD(x, y)
+		d := Dir{x / o, y / o}
+		id, ok := dirIDs[d]
+		if !ok {
+			id := len(dirs)
+			dirIDs[d] = id
+			cnts = append(cnts, 0)
+			dirs = append(dirs, d)
+		}
+		cnts[id]++
+		rawDirs[i] = d
+	}
+
+	orders := make([]int, len(dirs))
+	for i := range orders {
+		orders[i] = i
+	}
+	// 极角排序
+	sort.Slice(orders, func(i int, j int) bool {
+		a, b := dirs[orders[i]], dirs[orders[j]]
+		ah, bh := Half(a), Half(b)
+		if ah != bh { // 先按半平面排序
+			return ah < bh
+		}
+		// 再按叉积排序
+		v := Cross(a, b)
+		if v != 0 {
+			return v > 0
+		}
+		// 最后按x，y比较，但因为上面归一化后，基本走不到
+		if a.x != b.x {
+			return a.x < b.x
+		}
+		return a.y < b.y
+	})
+
+	// 根据排序结果，处理出前缀和
+	// pos := make([]int, N)
+	s := make([]int, len())
+	for i := range 
+
+	for ; Q > 0; Q-- {
+		a, b := readI(), readI()
+	}
+}
+
+func GCD(a, b int) int {
+	for b > 0 {
+		t := b
+		a, b = t, a%b
+	}
+	return a
+}
+
+type Dir struct{ x, y int }
+
+func Half(d Dir) int {
+	if d.y > 0 || (d.y == 0 && d.x > 0) {
+		return 0 // 上半平面
+	}
+	return 1 // 下半平面
+}
+
+func Cross(a, b Dir) int {
+	return a.x*b.y - b.x*a.y
 }
 
 var (
