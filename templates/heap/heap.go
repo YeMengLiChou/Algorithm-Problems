@@ -1,4 +1,4 @@
-package templates
+package heap
 
 // 优先队列、最小堆模板实现
 type hq []int

@@ -2,6 +2,12 @@ package main
 
 import "fmt"
 
+func main() {
+	fmt.Println(
+		champagneTower(100000009, 33, 17),
+	)
+}
+
 func champagneTower(poured int, query_row int, query_glass int) float64 {
 	f := make([]float64, query_row+1)
 	f[0] = float64(poured)
@@ -18,10 +24,4 @@ func champagneTower(poured int, query_row int, query_glass int) float64 {
 		fmt.Println(f)
 	}
 	return f[query_glass-1]
-}
-
-func main() {
-	fmt.Println(
-		champagneTower(100000009, 33, 17),
-	)
 }

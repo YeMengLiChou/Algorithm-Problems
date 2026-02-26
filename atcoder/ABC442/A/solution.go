@@ -8,9 +8,17 @@ import (
 	"os"
 )
 
-type Int = int
+type Int = int64
 
 func solution() {
+	S := readS()
+	res := 0
+	for _, x := range S {
+		if x == 'i' || x == 'j' {
+			res++
+		}
+	}
+	puts(res)
 }
 
 var (

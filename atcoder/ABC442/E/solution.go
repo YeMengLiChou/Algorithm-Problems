@@ -11,6 +11,7 @@ import (
 type Int = int
 
 func solution() {
+	N, Q := readI(), readI()
 }
 
 var (

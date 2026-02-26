@@ -1,5 +1,7 @@
 package main
 
+// https://atcoder.jp/contests/abc442/tasks/abc442_c
+
 import (
 	"bufio"
 	"bytes"
@@ -10,7 +12,34 @@ import (
 
 type Int = int
 
+func C(n, m int) int {
+	d := 1
+	for i, j := n, 1; j <= m; i-- {
+		d = d * i / j
+		j++
+	}
+	return d
+}
+
 func solution() {
+	N, M := readI(), readI()
+	conflicts := map[int]map[int]bool{}
+	for i := range N {
+		conflicts[i+1] = map[int]bool{}
+	}
+	for range M {
+		A, B := readI(), readI()
+		conflicts[A][B] = true
+		conflicts[B][A] = true
+	}
+	for i := 1; i <= N; i++ {
+		c := N - 1 - len(conflicts[i])
+		d := 0
+		if c >= 3 {
+			d = C(c, 3)
+		}
+		puts(d, " ")
+	}
 }
 
 var (

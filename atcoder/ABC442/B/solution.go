@@ -1,5 +1,6 @@
 package main
 
+// https://atcoder.jp/contests/abc442/tasks/abc442_b
 import (
 	"bufio"
 	"bytes"
@@ -11,6 +12,28 @@ import (
 type Int = int
 
 func solution() {
+	Q := readI()
+	v := 0
+	playing := false
+	for Q > 0 {
+		a := readI()
+		switch a {
+		case 1:
+			v += 1
+		case 2:
+			if v > 0 {
+				v -= 1
+			}
+		case 3:
+			playing = !playing
+		}
+		if v >= 3 && playing {
+			puts("Yes\n")
+		} else {
+			puts("No\n")
+		}
+		Q--
+	}
 }
 
 var (

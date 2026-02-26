@@ -53,6 +53,7 @@ func (st *SegTree) build(u, l, r int, nums []int) {
 	st.pushup(u, lc, rc)
 }
 
+// Update 区间更新
 func (st *SegTree) Update(ql, qr, k int) {
 	st.update(1, 0, st.N-1, ql, qr, k)
 }
@@ -73,6 +74,7 @@ func (st *SegTree) update(u, l, r, ql, qr, k int) {
 	st.pushup(u, lc, rc)
 }
 
+// Query 查询操作
 func (st *SegTree) Query(ql, qr int) int {
 	return st.query(1, 0, st.N-1, ql, qr)
 }
@@ -86,4 +88,22 @@ func (st *SegTree) query(u, l, r, ql, qr int) int {
 	mid, lc, rc := position(u, l, r)
 	st.pushdown(u, lc, rc, l, r)
 	return st.query(lc, l, mid, ql, qr) + st.query(rc, mid+1, r, ql, qr)
+}
+
+// Get 获取 idx 的值
+func (st *SegTree) Get(idx int) int {
+	return st.get(1, 0, st.N-1, idx)
+}
+
+func (st *SegTree) get(u, l, r, idx int) int {
+	if l == r {
+		return st.Nodes[u].Val
+	}
+	mid, lc, rc := position(u, l, r)
+	st.pushdown(u, lc, rc, l, r)
+	if idx <= mid {
+		return st.get(lc, l, mid, idx)
+	} else {
+		return st.get(rc, mid+1, r, idx)
+	}
 }
