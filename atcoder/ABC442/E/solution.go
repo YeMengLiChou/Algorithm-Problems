@@ -13,8 +13,8 @@ type Int = int
 
 func solution() {
 	N, Q := readI(), readI()
-	// 原始编号
-	rawDirs := make([]Dir, N)
+	// 记录原始编号与 id  的映射
+	rawDirs := make([]int, N)
 	// 统计同一个方向上的点数
 	cnts := make([]int, 0, N)
 	dirs := make([]Dir, 0, N)
@@ -32,10 +32,11 @@ func solution() {
 			dirs = append(dirs, d)
 		}
 		cnts[id]++
-		rawDirs[i] = d
+		rawDirs[i] = id
 	}
-
-	orders := make([]int, len(dirs))
+	
+	dirCnt = len(dirs)
+	orders := make([]int, dirCnt)
 	for i := range orders {
 		orders[i] = i
 	}
@@ -58,13 +59,23 @@ func solution() {
 		return a.y < b.y
 	})
 
+	// 
+	pos := make([]int, dirCnt) 
+	for i := range orders {
+		
+	}
 	// 根据排序结果，处理出前缀和
-	// pos := make([]int, N)
-	s := make([]int, len())
-	for i := range 
+	// s := make([]int, len())
 
+	s := make([]int, len(dirs) + 1)
+	for i := dd
 	for ; Q > 0; Q-- {
-		a, b := readI(), readI()
+		// raw id
+		a, b := readI()-1, readI()-1
+		// 转换为排序后的位置
+		
+
+	
 	}
 }
 
