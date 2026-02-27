@@ -31,9 +31,11 @@ func GCD(a, b int) int {
 }
 
 func GCD1(a, b int) int {
-	for b > 0 {
-		t := b
-		b, a = a%b, t
+	for b != 0 {
+		a, b = b, a%b
+	}
+	if a < 0 {
+		return -a
 	}
 	return a
 }

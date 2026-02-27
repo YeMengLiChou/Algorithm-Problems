@@ -14,7 +14,7 @@ type Int = int
 func solution() {
 	N, Q := readI(), readI()
 	// 记录原始编号与 id  的映射
-	rawDirs := make([]int, N)
+	raws := make([]int, N)
 	// 统计同一个方向上的点数
 	cnts := make([]int, 0, N)
 	dirs := make([]Dir, 0, N)
@@ -22,20 +22,19 @@ func solution() {
 	dirIDs := make(map[Dir]int, N)
 	for i := range N {
 		x, y := readI(), readI()
-		o := GCD(x, y)
+		o := GCD(abs(x), abs(y))
 		d := Dir{x / o, y / o}
 		id, ok := dirIDs[d]
 		if !ok {
-			id := len(dirs)
+			id = len(dirs)
 			dirIDs[d] = id
 			cnts = append(cnts, 0)
 			dirs = append(dirs, d)
 		}
 		cnts[id]++
-		rawDirs[i] = id
+		raws[i] = id
 	}
-	
-	dirCnt = len(dirs)
+	dirCnt := len(dirs)
 	orders := make([]int, dirCnt)
 	for i := range orders {
 		orders[i] = i
@@ -59,30 +58,45 @@ func solution() {
 		return a.y < b.y
 	})
 
-	// 
-	pos := make([]int, dirCnt) 
-	for i := range orders {
-		
+	// 方便根据 id 找到排序后的位置
+	pos := make([]int, dirCnt)
+	for i, id := range orders {
+		pos[id] = i
 	}
 	// 根据排序结果，处理出前缀和
-	// s := make([]int, len())
-
-	s := make([]int, len(dirs) + 1)
-	for i := dd
+	s := make([]int, dirCnt+1)
+	for i := range dirCnt {
+		s[i+1] = s[i] + cnts[orders[i]]
+	}
 	for ; Q > 0; Q-- {
 		// raw id
 		a, b := readI()-1, readI()-1
+		// map id
+		aid, bid := raws[a], raws[b]
 		// 转换为排序后的位置
-		
+		ap, bp := pos[aid], pos[bid]
 
-	
+		// 相同角
+		if ap == bp {
+			puts(cnts[aid], "\n")
+		} else if bp < ap {
+			puts(s[ap+1]-s[bp], "\n")
+		} else {
+			puts(s[dirCnt]-s[bp]+s[ap+1], "\n")
+		}
 	}
+}
+
+func abs(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
 }
 
 func GCD(a, b int) int {
 	for b > 0 {
-		t := b
-		a, b = t, a%b
+		a, b = b, a%b
 	}
 	return a
 }
