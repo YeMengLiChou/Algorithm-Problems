@@ -45,3 +45,33 @@ func GCD1(a, b int) int {
 func LCM(a, b int) int {
 	return a * b / GCD(a, b)
 }
+
+// 快速幂
+func qpow(x, y, m int64) int64 {
+	ans := int64(1)
+	for y > 0 {
+		if y&1 > 0 {
+			ans = ans * x % m
+		}
+		x = x * x % m
+		y >>= 1
+	}
+	return ans
+}
+
+// qpow_f 处理 `y` 可能为负数的情况
+func qpow_f(x float64, y int) float64 {
+	ans := 1.0
+	if y < 0 {
+		y -= -y
+		x = 1 / x
+	}
+	for y > 0 {
+		if y&1 > 0 {
+			ans *= x
+		}
+		x *= x
+		y >>= 1
+	}
+	return ans
+}
